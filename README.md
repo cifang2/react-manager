@@ -1,54 +1,29 @@
-# React + TypeScript + Vite
+# React Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 2025-04-28
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 2025-04-27
+- ✨ 新增环境变量配置功能
+  - 添加环境变量处理工具
+  - 支持多环境配置
+- 🔧 优化 Vite 配置
+  - 添加路径别名
+  - 配置 gzip 压缩
+- 📝 添加 TypeScript 类型声明
+  - 全局类型定义
+  - 环境变量类型
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 项目配置
+### 环境变量
+- `VITE_PORT`: 开发服务器端口（默认3001）
+- `VITE_OPEN`: 是否自动打开浏览器
+- `VITE_USE_COMPRESSION`: 是否启用 gzip 压缩
+- `VITE_USE_CONSOLE`: 是否启用控制台日志
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 开发指南
+1. 安装依赖
+```bash
+npm install
 ```
