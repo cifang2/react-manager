@@ -1,8 +1,9 @@
 import logo from "@/assets/react.svg"
+import style from './index.module.less'
 const Logo = () => {
     return (
-        <div>
-            <img src={logo} alt="logo"></img>
+        <div className={style.logo}>
+            <img src={logo} alt="logo" className={style.logo_img}></img>
         </div>
     )
 }
