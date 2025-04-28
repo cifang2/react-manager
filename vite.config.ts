@@ -25,6 +25,8 @@ export default defineConfig((mode: ConfigEnv): UserConfig => {
       alias: {
         '@': resolve(__dirname, 'src')
       }
+      //创建一个@别名，__dirname是当前文件所在的目录
+      //resolve是vite中的一个方法，会解析出@指向的绝对路径
     },
     server: {//这里直接使用env配置
       host: '0.0.0.0',
