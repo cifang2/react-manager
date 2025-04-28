@@ -1,7 +1,7 @@
 
 
 //加载Env配置文件的的函数 
-export function warppEnv(envConf) {
+export function warppEnv(envConf: Recordable): ViteEnv {
     const ret: any = {};
     for (const envName of Object.keys(envConf)) {
         let realName = envConf[envName].replace(/\\n/g, '\n');
