@@ -3,6 +3,7 @@ import Logo from "../components/logo"
 import { useEffect, useState } from "react"
 import * as Icons from '@ant-design/icons'
 import React from "react"
+import { useLocation } from "react-router-dom"
 
 
 //菜单组件
@@ -25,6 +26,10 @@ const LayoutMenu = () => {
                         {
                             path: '/sys/home',
                             label: '用户管理',
+                        },
+                        {
+                            path: '/sys/role',
+                            label: '角色管理',
                         }
                     ]
                 }
@@ -88,6 +93,37 @@ const LayoutMenu = () => {
         } as MenuItem
     }
 
+    //定义openKeys和selectedKeys
+    const [openKeys, setOpenKeys] = useState<string[]>([])
+    const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+    const onOpenChange = (opemKeys: string[]) => {
+        if (openKeys.length === 0 || openKeys.length === 1) return setOpenKeys(opemKeys)
+        const latestOpenKey = opemKeys[openKeys.length - 1]
+        if (latestOpenKey.includes(openKeys[0])) {
+            setOpenKeys(openKeys)
+        } else
+            setOpenKeys([latestOpenKey])
+    }
+
+    //保持常量
+    const { pathname } = useLocation()
+    useEffect(() => {
+        setSelectedKeys([pathname])
+        setOpenKeys(getOpenKeys(pathname))
+    }, [pathname])
+    //获取openKeys
+    const getOpenKeys = (path: string) => {
+        let newStr: string = ''
+        let newArr: any[] = []
+        let arr = path.split('/').map(i => '/' + i)
+        for (let i = 1; i < arr.length - 1; i++) {
+            newStr += arr[i]
+            newArr.push(newStr)
+        }
+        return newArr
+    }
+    //刷新页面后，副的菜单会自动打开，同时地址也会默认选中
+
     return (
         //返回一个logo，一个菜单
         //使用了spin组件，loading的时候显示loading
@@ -99,6 +135,9 @@ const LayoutMenu = () => {
                     theme="dark"
                     mode="inline"
                     items={menuList}
+                    openKeys={openKeys}
+                    selectedKeys={selectedKeys}
+                    onOpenChange={onOpenChange}
                 />
             </Spin>
         </div>
