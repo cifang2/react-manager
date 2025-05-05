@@ -3,13 +3,14 @@ import Logo from "../components/logo"
 import { useEffect, useState } from "react"
 import * as Icons from '@ant-design/icons'
 import React from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 //菜单组件
 const LayoutMenu = () => {
     //菜单数据                      
     const [menuList, setMenuList] = useState<MenuItem[]>([])
+    const [menuData, setMenuData] = useState<Menu.MenuOptions[]>([])
     //loading，获取菜单数据的时候就会显示loading
     const [loading, setLoading] = useState(false)
 
@@ -35,6 +36,7 @@ const LayoutMenu = () => {
                 }
             ]
             setMenuList(deepLoopFloat(data))//把数据转化为antd需要的格式，set进Menulist
+            setMenuData(data)//把数据set进MenuData
             setLoading(false)
         } catch {
             setLoading(false)
@@ -124,6 +126,27 @@ const LayoutMenu = () => {
     }
     //刷新页面后，副的菜单会自动打开，同时地址也会默认选中
 
+
+    //点击菜单
+    const navigate = useNavigate()
+    const clickMenu: MenuProps['onClick'] = ({ key }: { key: string }) => {
+        //const route = searchRoute(key, menuData)
+        navigate(key)
+    }
+    // const searchRoute = (key: string, routes: Menu.MenuOptions[]) => {
+    //     for (let i = 0; i < routes.length; i++) {
+    //         const item = routes[i]
+    //         if (item.path === key) {
+    //             navigate(item.path)
+    //             return item
+    //         }
+    //         if (item.children) {
+    //             const res = searchRoute(key, item.children)
+    //             if (res) return res
+    //         }
+    //     }
+    // }
+
     return (
         //返回一个logo，一个菜单
         //使用了spin组件，loading的时候显示loading
@@ -138,6 +161,7 @@ const LayoutMenu = () => {
                     openKeys={openKeys}
                     selectedKeys={selectedKeys}
                     onOpenChange={onOpenChange}
+                    onClick={clickMenu}
                 />
             </Spin>
         </div>
