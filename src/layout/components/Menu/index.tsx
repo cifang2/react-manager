@@ -1,6 +1,8 @@
 import { Menu, MenuProps, Spin } from "antd"
 import Logo from "../components/logo"
 import { useEffect, useState } from "react"
+import * as Icons from '@ant-design/icons'
+import React from "react"
 
 
 //菜单组件
@@ -14,7 +16,7 @@ const LayoutMenu = () => {
         setLoading(true)
         try {
             //axios获取菜单数据
-            let data = [
+            const data = [
                 {
                     path: '/sys',
                     icon: 'SettingOutlined',
@@ -29,20 +31,27 @@ const LayoutMenu = () => {
             ]
             setMenuList(deepLoopFloat(data))//把数据转化为antd需要的格式，set进Menulist
             setLoading(false)
-        } catch (err) {
+        } catch {
             setLoading(false)
         }
+    }
+
+    //动态渲染icon图标
+    const customIcons: { [key: string]: any } = Icons
+    const renderIcon = (icon: string) => {
+        if (!icon) return null
+        return React.createElement(customIcons[icon])
     }
 
     //转换函数
     const deepLoopFloat = (menuList: Menu.MenuOptions[], newArray: MenuItem[] = []) => {
         menuList.forEach((item: Menu.MenuOptions) => {
             if (!item.children?.length) {
-                newArray.push(getItem(item.label, item.path, item.icon))
+                newArray.push(getItem(item.label, item.path, renderIcon(item.icon!)))
             } else {
                 const children = deepLoopFloat(item.children, [])
-                newArray.push(getItem(item.label, item.path, item.icon, children))
-            }
+                newArray.push(getItem(item.label, item.path, renderIcon(item.icon!), children as []))
+            }//这里是渲染
         })
         return newArray
     }
@@ -68,12 +77,14 @@ const LayoutMenu = () => {
         key: string | undefined,
         icon?: React.ReactNode,
         children?: [],
+        type?: 'group',
     ): MenuItem => {
         return {
+            label,
             key,
             icon,
             children,
-            label
+            type,
         } as MenuItem
     }
 
