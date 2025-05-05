@@ -20,3 +20,15 @@ declare interface ViteEnv {
     //这里是定义可能的环境变量，声明的时候不一定要用所有的变量
 }
 //使用interface，因为明确是一个对象类型，或者说是一个接口
+
+//Menu全局定义
+declare namespace Menu {
+    interface MenuOptions {
+        key?: string;
+        label?: string;
+        path?: string;
+        title?: string;
+        icon?: string;
+        children?: MenuOptions[];
+    }
+}
