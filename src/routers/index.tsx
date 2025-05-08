@@ -3,6 +3,7 @@ import { Navigate, useRoutes } from 'react-router-dom'
 import lazyLoad from './utils/lazyLoad'
 import React from 'react'
 import { RouteObject } from './interface'
+import { store } from '@/redux'
 
 //导入modules下的所有路由
 const metaRouters = import.meta.glob('./modules/*.tsx', { eager: true })
@@ -35,11 +36,25 @@ Object.keys(metaRouters).forEach((item: string) => {
 //之后，把导出的文件名+导出名作为双重索引，将所有的方法本身添加到routerArray中
 
 
+//处理访问根时是否跳转到login
+function AuthWrapper() {
+    function handleAuthCheck() {
+        //从store中获取token
+        const userToken = store.getState().global.token
+        if (userToken) {
+            return <Navigate to="/sys/home" />
+        } else {
+            return <Navigate to="/login" />
+        }
+    }
+    return handleAuthCheck()
+}
+
 
 export const rootRouter = [
     {
         path: '/',
-        element: <Navigate to="/login" />  // 根路径重定向到登录页
+        element: <AuthWrapper />  // 根路径重定向到登录页
     },
     {
         path: '/login',
