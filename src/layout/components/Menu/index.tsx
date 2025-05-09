@@ -4,10 +4,15 @@ import { useEffect, useState } from "react"
 import * as Icons from '@ant-design/icons'
 import React from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { setAuthRouter } from "@/redux/modules/auth/action"
+import { connect } from "react-redux"
 
 
 //菜单组件
-const LayoutMenu = () => {
+const LayoutMenu = (props: any) => {
+
+    const { setAuthRouter } = props
+
     //菜单数据                      
     const [menuList, setMenuList] = useState<MenuItem[]>([])
     const [menuData, setMenuData] = useState<Menu.MenuOptions[]>([])
@@ -37,6 +42,7 @@ const LayoutMenu = () => {
             ]
             setMenuList(deepLoopFloat(data))//把数据转化为antd需要的格式，set进Menulist
             setMenuData(data)//把数据set进MenuData
+            setAuthRouter(handleRouter(data, []))
             setLoading(false)
         } catch {
             setLoading(false)
@@ -74,7 +80,17 @@ const LayoutMenu = () => {
     }, [])
     //这段代码可以在页面加载完成后执行一次
 
-
+    //把菜单处理成一维数组，只保留children中的菜单
+    const handleRouter = (routerList: Menu.MenuOptions[], newArr: string[]) => {
+        routerList.forEach((route: Menu.MenuOptions) => {
+            if (route.children && route.children.length > 0) {
+                handleRouter(route.children, newArr)
+            } else {
+                newArr.push(route.path!)
+            }
+        })
+        return newArr
+    }
 
     //定义menu类型
     type MenuItem = Required<MenuProps>['items'][number]
@@ -169,4 +185,6 @@ const LayoutMenu = () => {
 }
 
 
-export default LayoutMenu
+//export default LayoutMenu
+const mapDispatchToProps = { setAuthRouter }
+export default connect(null, mapDispatchToProps)(LayoutMenu)
