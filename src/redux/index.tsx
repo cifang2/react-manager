@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 import global from "./modules/global/reducer";//这是啥？
+import auth from "./modules/auth/reducer";
 
 //redux持久化配置
 const persistConfig = {
@@ -14,7 +15,8 @@ const persistConfig = {
 
 //创建reducer
 const reducer = combineReducers({
-    global
+    global,
+    auth
 })
 
 //创建一个新的redux状态的reducer
