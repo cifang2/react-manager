@@ -4,4 +4,7 @@ export interface GlobalState {
 
 export interface AuthState {
     authRouter: string[];
+    authBotton: {
+        [propName: string]: any;
+    };
 }

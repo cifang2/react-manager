@@ -7,3 +7,11 @@ export const setAuthRouter = (authRouter: string[]) => {
         authRouter
     }
 }
+
+//设置按钮权限的action
+export const setAuthBotton = (authBotton: { [propName: string]: any }) => {
+    return {
+        type: types.SET_AUTH_BOTTON,
+        authBotton
+    }
+}
