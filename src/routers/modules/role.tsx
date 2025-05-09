@@ -9,7 +9,11 @@ const Role = [
         children: [
             {
                 path: '/sys/role',
-                element: lazyLoad(React.lazy(() => import('@/views/role')))
+                element: lazyLoad(React.lazy(() => import('@/views/role'))),
+                meta: {
+                    title: '角色管理',
+                    key:'/sys/role'
+                }
             }
         ]
     },

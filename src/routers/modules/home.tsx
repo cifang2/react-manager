@@ -9,7 +9,11 @@ const Home = [
         children: [
             {
                 path: '/sys/home',
-                element: lazyLoad(React.lazy(() => import('@/views/home')))
+                element: lazyLoad(React.lazy(() => import('@/views/home'))),
+                meta: {
+                    title: '首页',
+                    key: '/sys/home'
+                }
             }
         ]
     },
